@@ -1,0 +1,163 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= name %></p>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+            <h1 class="mt-4">Student List</h1>
+            <ul>
+                <% if(typeof Students != 'undefined') { %>
+                    <% for(var i=0; i<(Students.length); i++) { %>
+                        <li><div class="card">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-3 mb-2 bg-secondary text-white">Roll Number: <%= Students[i].roll %></li>
+                                <li class="list-group-item p-3 mb-2 bg-secondary text-white">Name: <%= Students[i].name %></li>
+                                <li class="list-group-item p-3 mb-2 bg-secondary text-white">Email: <%= Students[i].email %></li>
+                            </ul>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                Display Scores
+                            </button>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-3 mb-2 bg-danger text-white">Score in Subject 1: <%= Students[i].score1 %></li>
+                                        <li class="list-group-item p-3 mb-2 bg-danger text-white">Score in Subject 2: <%= Students[i].score2 %></li>
+                                        <li class="list-group-item p-3 mb-2 bg-danger text-white">Score in Subject 3: <%= Students[i].score3 %></li>
+                                        <li class="list-group-item p-3 mb-2 bg-danger text-white">Score in Subject 4: <%= Students[i].score4 %></li>
+                                        <li class="list-group-item p-3 mb-2 bg-danger text-white">Score in Subject 5: <%= Students[i].score5 %></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Update
+                        </button>
+                    
+                        <!-- Modal -->
+                        <form action="/users/updatestudent" method="POST">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="roll">Roll Number</label>
+                                                <input type="text" id="roll" name="roll" class="form-control"
+                                                    value="<%= Students[i].roll %>" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" name="name" class="form-control"
+                                                    value="<%= Students[i].name %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Students Email</label>
+                                                <input type="text" id="email" name="email" class="form-control"
+                                                    value="<%= Students[i].email %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="score1">Subject 1 score:</label>
+                                                <input type="text" id="score1" name="score1" class="form-control"
+                                                    value="<%= Students[i].score1 %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="score2">Subject 2 score:</label>
+                                                <input type="text" id="score2" name="score2" class="form-control"
+                                                    value="<%= Students[i].score2 %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="score3">Subject 3 score:</label>
+                                                <input type="text" id="score3" name="score3" class="form-control"
+                                                    value="<%= Students[i].score3 %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="score4">Subject 4 score:</label>
+                                                <input type="text" id="score4" name="score4" class="form-control"
+                                                    value="<%= Students[i].score4 %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="score5">Subject 5 score:</label>
+                                                <input type="text" id="score5" name="score5" class="form-control"
+                                                    value="<%= Students[i].score5 %>" />
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2"
+                aria-expanded="false" aria-controls="collapseExample2">
+                Add A Student
+            </button>
+            <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                    <form action='/users/student' method="POST">
+                        <div class="form-group">
+                            <label for="roll">Roll Number</label>
+                            <input type="text" id="roll" name="roll" class="form-control" placeholder="Enter Roll Number" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Students Email</label>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Enter Students email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="score1">Subject 1 score:</label>
+                            <input type="text" id="score1" name="score1" class="form-control"
+                                placeholder="Enter Students score in subject 1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="score2">Subject 2 score:</label>
+                            <input type="text" id="score2" name="score2" class="form-control"
+                                placeholder="Enter Students score in subject 2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="score3">Subject 3 score:</label>
+                            <input type="text" id="score3" name="score3" class="form-control"
+                                placeholder="Enter Students score in subject 3" />
+                        </div>
+                        <div class="form-group">
+                            <label for="score4">Subject 4 score:</label>
+                            <input type="text" id="score4" name="score4" class="form-control"
+                                placeholder="Enter Students score in subject 4" />
+                        </div>
+                        <div class="form-group">
+                            <label for="score5">Subject 5 score:</label>
+                            <input type="text" id="score5" name="score5" class="form-control"
+                                placeholder="Enter Students score in subject 5" />
+                        </div>
+                        <div class="form-group">
+                            <label for="teacheremail">Student Of:</label>
+                            <input type="text" id="teacheremail" name="teacheremail" class="form-control" value="<%= email %>" readonly />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
