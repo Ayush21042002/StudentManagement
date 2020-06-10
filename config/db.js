@@ -26,10 +26,13 @@ const Users = db.define('Users', {
 })
 
 const Students = db.define('Students', {
+    id:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+    },
     roll: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        primaryKey:true
     },
     name: {
         type: Sequelize.STRING(50),
@@ -57,9 +60,6 @@ const Students = db.define('Students', {
     score5: {
         type: Sequelize.INTEGER,
     },
-    score6:{
-        type: Sequelize.INTEGER,
-    }
 })
 
 Users.hasMany(Students)

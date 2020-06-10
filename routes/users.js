@@ -112,16 +112,14 @@ router.post('/student', async(req, res) => {
 })
 
 router.post('/updatestudent', async(req, res) => {
-    const { roll, name, email, score1, score2, score3, score4, score5 } = req.body
+    const { roll, name, email, score1, score2, score3, score4, score5, teacheremail } = req.body
 
     const student = await Students.findByPk(Number(roll))
-    const teacheremail = student.UserEmail
 
     if (student == null)
         res.status(400)
 
     Students.update({
-        roll: Number(roll),
         name: name,
         email: email,
         score1: Number(score1),
@@ -129,7 +127,10 @@ router.post('/updatestudent', async(req, res) => {
         score3: Number(score3),
         score4: Number(score4),
         score5: Number(score5)
-    }, { where: { roll: Number(student.roll) } }).error(err => {
+    }, { where: { 
+        roll: Number(student.roll),
+        UserEmail: teacheremail,    
+    } }).error(err => {
 
         handleError(err)
         res.status(400);
@@ -150,17 +151,17 @@ router.post('/updatestudent', async(req, res) => {
 })
 
 router.post('/deletestudent', async(req, res) => {
-    const { roll, name, email } = req.body
+    const { roll, name, email, teacheremail } = req.body
 
     const student = await Students.findByPk(Number(roll))
-    const teacheremail = student.UserEmail
 
     if (student == null)
         res.status(400)
 
     Students.destroy({
         where: {
-            roll: Number(student.roll)
+            roll: Number(student.roll),
+            UserEmail: teacheremail
         }
     })
 
